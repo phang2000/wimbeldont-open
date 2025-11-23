@@ -200,23 +200,155 @@
             margin-bottom: 10px;
         }
         
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
-            .leaderboard-header, .leaderboard-row {
-                grid-template-columns: 35px 1fr 45px 45px 45px 50px 50px 55px;
-                font-size: 0.75em;
-                padding: 8px 3px;
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+                border-radius: 15px;
             }
             
             h1 {
-                font-size: 1.8em;
+                font-size: 2em;
+                margin-bottom: 8px;
             }
             
-            .finals-bracket {
-                grid-template-columns: 1fr;
+            .subtitle {
+                font-size: 0.95em;
+                margin-bottom: 20px;
+            }
+            
+            .prize-banner {
+                font-size: 1.1em !important;
+                padding: 12px !important;
+                line-height: 1.5;
+            }
+            
+            /* Hide desktop leaderboard on mobile */
+            .leaderboard {
+                display: none;
+            }
+            
+            /* Mobile card-based leaderboard */
+            .mobile-leaderboard {
+                display: block;
+            }
+            
+            .mobile-leader-card {
+                background: white;
+                border: 2px solid #e9ecef;
+                border-radius: 12px;
+                padding: 15px;
+                margin-bottom: 12px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            }
+            
+            .mobile-leader-card.first {
+                border-color: #FFD700;
+                background: linear-gradient(to right, #fffbf0 0%, white 100%);
+            }
+            
+            .mobile-leader-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .mobile-position {
+                font-size: 1.8em;
+                font-weight: bold;
+                color: #667eea;
+                width: 50px;
+            }
+            
+            .mobile-position.gold { color: #FFD700; }
+            
+            .mobile-player-name {
+                font-size: 1.3em;
+                font-weight: 600;
+                flex: 1;
+            }
+            
+            .mobile-points {
+                font-size: 1.5em;
+                font-weight: bold;
+                color: #667eea;
+            }
+            
+            .mobile-stats {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 10px;
+                margin-top: 10px;
+            }
+            
+            .mobile-stat {
+                text-align: center;
+            }
+            
+            .mobile-stat-label {
+                font-size: 0.75em;
+                color: #666;
+                text-transform: uppercase;
+                margin-bottom: 4px;
+            }
+            
+            .mobile-stat-value {
+                font-size: 1.1em;
+                font-weight: 600;
+                color: #333;
+            }
+            
+            .section {
+                margin-bottom: 30px;
+            }
+            
+            .section-title {
+                font-size: 1.5em;
             }
             
             .matches-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .match-card {
+                padding: 18px;
+            }
+            
+            .match-number {
+                font-size: 1em;
+                margin-bottom: 12px;
+            }
+            
+            .match-players {
+                font-size: 1.15em;
+            }
+            
+            .finals-bracket {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .final-match {
+                padding: 20px;
+            }
+        }
+        
+        /* Desktop - hide mobile leaderboard */
+        .mobile-leaderboard {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-leaderboard {
+                display: block;
             }
         }
     </style>
@@ -225,8 +357,8 @@
     <div class="container">
         <h1>🎾 The Wimbeldon't Open 🎾</h1>
         <p class="subtitle">6-Week Tennis Championship • 5 Weeks Round-Robin + Finals Week</p>
-        <div style="text-align: center; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 15px; border-radius: 10px; margin-bottom: 30px; font-size: 1.3em; font-weight: bold; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);">
-            💰 Prize Pool: $100 ($20 buy-in per player) • Winner Takes All! 💰
+        <div style="text-align: center; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 15px; border-radius: 10px; margin-bottom: 30px; font-size: 1.3em; font-weight: bold; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);" class="prize-banner">
+            💰 Prize Pool: $100 ($20 buy-in per player)<br><span style="font-size: 0.9em;">Winner Takes All!</span> 💰
         </div>
         
         <!-- Leaderboard Section -->
@@ -292,6 +424,119 @@
                     <div>0</div>
                     <div>0</div>
                     <div style="font-weight: bold;">0</div>
+                </div>
+            </div>
+            
+            <!-- Mobile Leaderboard -->
+            <div class="mobile-leaderboard">
+                <div class="mobile-leader-card first">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position gold">1</div>
+                        <div class="mobile-player-name">Peter</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-leader-card">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position">2</div>
+                        <div class="mobile-player-name">Sonu</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-leader-card">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position">3</div>
+                        <div class="mobile-player-name">Ben</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-leader-card">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position">4</div>
+                        <div class="mobile-player-name">Matt</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-leader-card">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position">5</div>
+                        <div class="mobile-player-name">Toby</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #667eea;">
