@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wimbeldon't Open 🎾</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        /* Leaderboard Styles */
+        .leaderboard {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .leaderboard-header {
+            background: #667eea;
+            color: white;
+            display: grid;
+            grid-template-columns: 50px 1fr 70px 70px 70px 75px 75px 90px;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+        
+        .leaderboard-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 70px 70px 70px 75px 75px 90px;
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .leaderboard-row:hover {
+            background: #e9ecef;
+        }
+        
+        .leaderboard-row:last-child {
+            border-bottom: none;
+        }
+        
+        .position {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .player-name {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .gold { color: #FFD700; }
+        .silver { color: #C0C0C0; }
+        .bronze { color: #CD7F32; }
+        
+        /* Match Card Styles */
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        /* Week Block Styles */
+        .week-block {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .week-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .week-bye {
+            font-size: 0.95em;
+            color: #856404;
+            background: #fff3cd;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        .week-matches {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .compact-match-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .compact-match-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .compact-match-card.completed {
+            background: #f8f9fa;
+        }
+        
+        .compact-match-number {
+            font-size: 0.85em;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .compact-match-players {
+            font-size: 1.15em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .match-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .match-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .match-card.completed {
+            background: #f8f9fa;
+        }
+        
+        .match-number {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .match-players {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .vs {
+            color: #667eea;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        
+        .winner {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .match-score {
+            text-align: center;
+            font-size: 1.1em;
+            color: #28a745;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .match-status {
+            text-align: center;
+            color: #667eea;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        /* Finals Section */
+        .finals-bracket {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .final-match {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .final-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .final-players {
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .trophy {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+                margin-bottom: 8px;
+            }
+            
+            .subtitle {
+                font-size: 0.95em;
+                margin-bottom: 20px;
+            }
+            
+            .prize-banner {
+                font-size: 1.1em !important;
+                padding: 12px !important;
+                line-height: 1.5;
+            }
+            
+            /* Hide desktop leaderboard on mobile */
+            .leaderboard {
+                display: none;
+            }
+            
+            /* Mobile card-based leaderboard */
+            .mobile-leaderboard {
+                display: block;
+            }
+            
+            .mobile-leader-card {
+                background: white;
+                border: 2px solid #e9ecef;
+                border-radius: 12px;
+                padding: 15px;
+                margin-bottom: 12px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            }
+            
+            .mobile-leader-card.first {
+                border-color: #FFD700;
+                background: linear-gradient(to right, #fffbf0 0%, white 100%);
+            }
+            
+            .mobile-leader-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .mobile-position {
+                font-size: 1.8em;
+                font-weight: bold;
+                color: #667eea;
+                width: 50px;
+            }
+            
+            .mobile-position.gold { color: #FFD700; }
+            
+            .mobile-player-name {
+                font-size: 1.3em;
+                font-weight: 600;
+                flex: 1;
+            }
+            
+            .mobile-points {
+                font-size: 1.5em;
+                font-weight: bold;
+                color: #667eea;
+            }
+            
+            .mobile-stats {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 10px;
+                margin-top: 10px;
+            }
+            
+            .mobile-stat {
+                text-align: center;
+            }
+            
+            .mobile-stat-label {
+                font-size: 0.75em;
+                color: #666;
+                text-transform: uppercase;
+                margin-bottom: 4px;
+            }
+            
+            .mobile-stat-value {
+                font-size: 1.1em;
+                font-weight: 600;
+                color: #333;
+            }
+            
+            .section {
+                margin-bottom: 30px;
+            }
+            
+            .section-title {
+                font-size: 1.5em;
+            }
+            
+            /* Week blocks mobile */
+            .week-block {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .week-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .week-title {
+                font-size: 1.3em;
+            }
+            
+            .week-bye {
+                font-size: 0.9em;
+                padding: 5px 10px;
+            }
+            
+            .week-matches {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .compact-match-card {
+                padding: 14px;
+            }
+            
+            .compact-match-number {
+                font-size: 0.85em;
+            }
+            
+            .compact-match-players {
+                font-size: 1.1em;
+            }
+            
+            .matches-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .match-card {
+                padding: 18px;
+            }
+            
+            .match-number {
+                font-size: 1em;
+                margin-bottom: 12px;
+            }
+            
+            .match-players {
+                font-size: 1.15em;
+            }
+            
+            .finals-bracket {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .final-match {
+                padding: 20px;
+            }
+        }
+        
+        /* Desktop - hide mobile leaderboard */
+        .mobile-leaderboard {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-leaderboard {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎾 The Wimbeldon't Open 🎾</h1>
+        <p class="subtitle">6-Week Tennis Championship • 5 Weeks Round-Robin + Finals Week</p>
+        <div style="text-align: center; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 15px; border-radius: 10px; margin-bottom: 30px; font-size: 1.3em; font-weight: bold; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);" class="prize-banner">
+            💰 Prize Pool: $100 ($20 buy-in per player)<br><span style="font-size: 0.9em;">Winner Takes All!</span> 💰
+        </div>
+        
+        <!-- Leaderboard Section -->
+        <div class="section">
+            <div class="section-title">🏆 Leaderboard</div>
+            <div class="leaderboard">
+                <div class="leaderboard-header">
+                    <div>Pos</div>
+                    <div>Player</div>
+                    <div>Played</div>
+                    <div>Won</div>
+                    <div>Lost</div>
+                    <div>Sets +/-</div>
+                    <div>Games +/-</div>
+                    <div>Points</div>
+                </div>
+                <div class="leaderboard-row">
+                    <div class="position gold">1</div>
+                    <div class="player-name">Peter</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div style="font-weight: bold;">0</div>
+                </div>
+                <div class="leaderboard-row">
+                    <div class="position">2</div>
+                    <div class="player-name">Sonu</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div style="font-weight: bold;">0</div>
+                </div>
+                <div class="leaderboard-row">
+                    <div class="position">3</div>
+                    <div class="player-name">Ben</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div style="font-weight: bold;">0</div>
+                </div>
+                <div class="leaderboard-row">
+                    <div class="position">4</div>
+                    <div class="player-name">Matt</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div style="font-weight: bold;">0</div>
+                </div>
+                <div class="leaderboard-row">
+                    <div class="position">5</div>
+                    <div class="player-name">Toby</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div>0</div>
+                    <div style="font-weight: bold;">0</div>
+                </div>
+            </div>
+            
+            <!-- Mobile Leaderboard -->
+            <div class="mobile-leaderboard">
+                <div class="mobile-leader-card first">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position gold">1</div>
+                        <div class="mobile-player-name">Peter</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-leader-card">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position">2</div>
+                        <div class="mobile-player-name">Sonu</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-leader-card">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position">3</div>
+                        <div class="mobile-player-name">Ben</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-leader-card">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position">4</div>
+                        <div class="mobile-player-name">Matt</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-leader-card">
+                    <div class="mobile-leader-header">
+                        <div class="mobile-position">5</div>
+                        <div class="mobile-player-name">Toby</div>
+                        <div class="mobile-points">0</div>
+                    </div>
+                    <div class="mobile-stats">
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">W-L</div>
+                            <div class="mobile-stat-value">0-0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Sets +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                        <div class="mobile-stat">
+                            <div class="mobile-stat-label">Games +/-</div>
+                            <div class="mobile-stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #667eea;">
+                <strong style="color: #667eea;">📋 Scoring Rules:</strong><br>
+                • Win = 2 points<br>
+                • Straight sets win (2-0) = +1 bonus point (3 points total)<br>
+                • Tiebreakers: 1) Points, 2) Sets difference, 3) Games difference
+            </div>
+        </div>
+        
+        <!-- Round Robin Section -->
+        <div class="section">
+            <div class="section-title">📅 Round-Robin Fixtures (5 Weeks)</div>
+            
+            <!-- Week 1 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 1</span>
+                    <span class="week-bye">Bye: Toby 🏖️</span>
+                </div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 1</div>
+                        <div class="compact-match-players">Peter <span class="vs">vs</span> Sonu</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 2</div>
+                        <div class="compact-match-players">Ben <span class="vs">vs</span> Matt</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 2 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 2</span>
+                    <span class="week-bye">Bye: Matt 🏖️</span>
+                </div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 3</div>
+                        <div class="compact-match-players">Peter <span class="vs">vs</span> Ben</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 4</div>
+                        <div class="compact-match-players">Sonu <span class="vs">vs</span> Toby</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 3 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 3</span>
+                    <span class="week-bye">Bye: Sonu 🏖️</span>
+                </div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 5</div>
+                        <div class="compact-match-players">Matt <span class="vs">vs</span> Peter</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 6</div>
+                        <div class="compact-match-players">Ben <span class="vs">vs</span> Toby</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 4 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 4</span>
+                    <span class="week-bye">Bye: Ben 🏖️</span>
+                </div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 7</div>
+                        <div class="compact-match-players">Sonu <span class="vs">vs</span> Matt</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 8</div>
+                        <div class="compact-match-players">Peter <span class="vs">vs</span> Toby</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 5 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 5</span>
+                    <span class="week-bye">Bye: Peter 🏖️</span>
+                </div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 9</div>
+                        <div class="compact-match-players">Ben <span class="vs">vs</span> Sonu</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 10</div>
+                        <div class="compact-match-players">Matt <span class="vs">vs</span> Toby</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Finals Section -->
+        <div class="section">
+            <div class="section-title">🏅 Finals Week (Week 6)</div>
+            <div class="finals-bracket">
+                <div class="final-match">
+                    <div class="trophy">🏆</div>
+                    <div class="final-title">GRAND FINAL</div>
+                    <div class="final-players">1st <span class="vs">vs</span> 2nd</div>
+                    <div class="match-status">TBD</div>
+                </div>
+                
+                <div class="final-match">
+                    <div class="trophy">🥉</div>
+                    <div class="final-title">3RD PLACE PLAYOFF</div>
+                    <div class="final-players">3rd <span class="vs">vs</span> 4th</div>
+                    <div class="match-status">TBD</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
