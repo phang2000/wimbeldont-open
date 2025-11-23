@@ -110,6 +110,77 @@
             gap: 20px;
         }
         
+        /* Week Block Styles */
+        .week-block {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .week-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .week-bye {
+            font-size: 0.95em;
+            color: #856404;
+            background: #fff3cd;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        .week-matches {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .compact-match-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .compact-match-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .compact-match-card.completed {
+            background: #f8f9fa;
+        }
+        
+        .compact-match-number {
+            font-size: 0.85em;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .compact-match-players {
+            font-size: 1.15em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
         .match-card {
             background: white;
             border: 2px solid #e9ecef;
@@ -311,6 +382,44 @@
             
             .section-title {
                 font-size: 1.5em;
+            }
+            
+            /* Week blocks mobile */
+            .week-block {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .week-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .week-title {
+                font-size: 1.3em;
+            }
+            
+            .week-bye {
+                font-size: 0.9em;
+                padding: 5px 10px;
+            }
+            
+            .week-matches {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .compact-match-card {
+                padding: 14px;
+            }
+            
+            .compact-match-number {
+                font-size: 0.85em;
+            }
+            
+            .compact-match-players {
+                font-size: 1.1em;
             }
             
             .matches-grid {
@@ -550,96 +659,104 @@
         <!-- Round Robin Section -->
         <div class="section">
             <div class="section-title">📅 Round-Robin Fixtures (5 Weeks)</div>
-            <p style="text-align: center; color: #666; margin-bottom: 20px;">Each player faces every other player once • 2 matches per week • 1 bye per week</p>
-            <div class="matches-grid">
-                <!-- Week 1 -->
-                <div class="match-card">
-                    <div class="match-number">Week 1 - Match 1</div>
-                    <div class="match-players">Peter <span class="vs">vs</span> Sonu</div>
-                    <div class="match-status">Upcoming</div>
+            
+            <!-- Week 1 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 1</span>
+                    <span class="week-bye">Bye: Toby 🏖️</span>
                 </div>
-                
-                <div class="match-card">
-                    <div class="match-number">Week 1 - Match 2</div>
-                    <div class="match-players">Ben <span class="vs">vs</span> Matt</div>
-                    <div class="match-status">Upcoming</div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 1</div>
+                        <div class="compact-match-players">Peter <span class="vs">vs</span> Sonu</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 2</div>
+                        <div class="compact-match-players">Ben <span class="vs">vs</span> Matt</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
                 </div>
-                
-                <div class="match-card" style="background: #fff3cd; border-color: #ffc107;">
-                    <div class="match-number">Week 1</div>
-                    <div class="match-players" style="color: #856404;">🏖️ <strong>Toby</strong> has a BYE</div>
+            </div>
+            
+            <!-- Week 2 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 2</span>
+                    <span class="week-bye">Bye: Matt 🏖️</span>
                 </div>
-                
-                <!-- Week 2 -->
-                <div class="match-card">
-                    <div class="match-number">Week 2 - Match 3</div>
-                    <div class="match-players">Peter <span class="vs">vs</span> Ben</div>
-                    <div class="match-status">Upcoming</div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 3</div>
+                        <div class="compact-match-players">Peter <span class="vs">vs</span> Ben</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 4</div>
+                        <div class="compact-match-players">Sonu <span class="vs">vs</span> Toby</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
                 </div>
-                
-                <div class="match-card">
-                    <div class="match-number">Week 2 - Match 4</div>
-                    <div class="match-players">Sonu <span class="vs">vs</span> Toby</div>
-                    <div class="match-status">Upcoming</div>
+            </div>
+            
+            <!-- Week 3 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 3</span>
+                    <span class="week-bye">Bye: Sonu 🏖️</span>
                 </div>
-                
-                <div class="match-card" style="background: #fff3cd; border-color: #ffc107;">
-                    <div class="match-number">Week 2</div>
-                    <div class="match-players" style="color: #856404;">🏖️ <strong>Matt</strong> has a BYE</div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 5</div>
+                        <div class="compact-match-players">Matt <span class="vs">vs</span> Peter</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 6</div>
+                        <div class="compact-match-players">Ben <span class="vs">vs</span> Toby</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
                 </div>
-                
-                <!-- Week 3 -->
-                <div class="match-card">
-                    <div class="match-number">Week 3 - Match 5</div>
-                    <div class="match-players">Matt <span class="vs">vs</span> Peter</div>
-                    <div class="match-status">Upcoming</div>
+            </div>
+            
+            <!-- Week 4 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 4</span>
+                    <span class="week-bye">Bye: Ben 🏖️</span>
                 </div>
-                
-                <div class="match-card">
-                    <div class="match-number">Week 3 - Match 6</div>
-                    <div class="match-players">Ben <span class="vs">vs</span> Toby</div>
-                    <div class="match-status">Upcoming</div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 7</div>
+                        <div class="compact-match-players">Sonu <span class="vs">vs</span> Matt</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 8</div>
+                        <div class="compact-match-players">Peter <span class="vs">vs</span> Toby</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
                 </div>
-                
-                <div class="match-card" style="background: #fff3cd; border-color: #ffc107;">
-                    <div class="match-number">Week 3</div>
-                    <div class="match-players" style="color: #856404;">🏖️ <strong>Sonu</strong> has a BYE</div>
+            </div>
+            
+            <!-- Week 5 -->
+            <div class="week-block">
+                <div class="week-header">
+                    <span class="week-title">Week 5</span>
+                    <span class="week-bye">Bye: Peter 🏖️</span>
                 </div>
-                
-                <!-- Week 4 -->
-                <div class="match-card">
-                    <div class="match-number">Week 4 - Match 7</div>
-                    <div class="match-players">Sonu <span class="vs">vs</span> Matt</div>
-                    <div class="match-status">Upcoming</div>
-                </div>
-                
-                <div class="match-card">
-                    <div class="match-number">Week 4 - Match 8</div>
-                    <div class="match-players">Peter <span class="vs">vs</span> Toby</div>
-                    <div class="match-status">Upcoming</div>
-                </div>
-                
-                <div class="match-card" style="background: #fff3cd; border-color: #ffc107;">
-                    <div class="match-number">Week 4</div>
-                    <div class="match-players" style="color: #856404;">🏖️ <strong>Ben</strong> has a BYE</div>
-                </div>
-                
-                <!-- Week 5 -->
-                <div class="match-card">
-                    <div class="match-number">Week 5 - Match 9</div>
-                    <div class="match-players">Ben <span class="vs">vs</span> Sonu</div>
-                    <div class="match-status">Upcoming</div>
-                </div>
-                
-                <div class="match-card">
-                    <div class="match-number">Week 5 - Match 10</div>
-                    <div class="match-players">Matt <span class="vs">vs</span> Toby</div>
-                    <div class="match-status">Upcoming</div>
-                </div>
-                
-                <div class="match-card" style="background: #fff3cd; border-color: #ffc107;">
-                    <div class="match-number">Week 5</div>
-                    <div class="match-players" style="color: #856404;">🏖️ <strong>Peter</strong> has a BYE</div>
+                <div class="week-matches">
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 9</div>
+                        <div class="compact-match-players">Ben <span class="vs">vs</span> Sonu</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
+                    <div class="compact-match-card">
+                        <div class="compact-match-number">Match 10</div>
+                        <div class="compact-match-players">Matt <span class="vs">vs</span> Toby</div>
+                        <div class="match-status">Upcoming</div>
+                    </div>
                 </div>
             </div>
         </div>
